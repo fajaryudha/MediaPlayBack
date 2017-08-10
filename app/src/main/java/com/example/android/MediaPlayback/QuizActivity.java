@@ -18,6 +18,8 @@ package com.example.android.MediaPlayback;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -73,9 +75,9 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     private SimpleExoPlayer mExoPlayer;
     private SimpleExoPlayerView mPlayerView;
     private Button[] mButtons;
-    private MediaSessionCompat mMediaSession;
     private PlaybackStateCompat.Builder mStateBuilder;
     private NotificationManager mNotificationManager;
+    private static MediaSessionCompat mMediaSession;
 
 
     @Override
@@ -372,5 +374,10 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         public void onSkipToPrevious() {
             mExoPlayer.seekTo(0);
         }
+    }
+    public static class MediaReceiver extends BroadcastReceiver {
+         public MediaReceiver() {}
+         @Override
+         public void onReceive(Context context, Intent intent) {MediaButtonReceiver.handleIntent(mMediaSession, intent);}
     }
 }
